@@ -5,38 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <header>
         <h1>Contact</h1>
     </header>
     <main>
-        <form id="formulaire">
+        <form method="post" id="formulaire" name="form">
             <div class="form-item">
                 <label for="nom">Nom</label>
-                <input type="text" id="nom" >
+                <input type="text" id="nom" name="nom" >
                 <div class="error invisible">Ce champ doit contenir entre 3 et 20 caractère</div>
             </div>
             <div class="form-item">
                 <label for="email">Email</label>
-                <input type="email" id="email" >
+                <input type="email" id="email" name="email" >
             </div>
             <div class="form-item">
                 <label for="sujet">Sujet</label>
-                <input type="text" id="sujet">
+                <input type="text" id="sujet" name="sujet">
                 <div class="error invisible">Ce champ doit contenir entre 3 et 50 caractère</div>
             </div>
             <div class="form-item">
                 <label for="message">Message</label>
-                <textarea id="message" cols="30" rows="10"></textarea>
+                <textarea id="message" cols="30" rows="10" name="message"></textarea>
                 <div class="error invisible">Ce champ doit contenir entre 10 et 150 caractère</div>
             </div>
             <button id="btn" type="submit">Envoyer</button>
             <div class="succes invisible">Votre message a bien été envoyé !</div>
         </form>
     </main>
-    <script src="/js/script.js"></script>
+    <script src="./js/script.js" defer></script>
     
 </body>
 </html>
