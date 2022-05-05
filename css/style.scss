@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'a_akhir_tahunregular';
-    src: url('/assets/fonts/font-akira/aakhirtahun-webfont.woff') format('woff2'),
-         url('/assets/fonts/font-akira/aakhirtahun-webfont.woff2') format('woff');
+    src: url('../assets/fonts/font-akira/aakhirtahun-webfont.woff') format('woff2'),
+         url('../assets/fonts/font-akira/aakhirtahun-webfont.woff2') format('woff');
     font-weight: normal;
     font-style: normal;
 
@@ -32,7 +32,7 @@ header {
     h1 {
         position: relative;
         left: 10%;
-        top: 40%;
+        top: 30%;
         color: #2C2C2C;
         font-family: 'a_akhir_tahunregular';
         font-size: 3rem;
@@ -43,22 +43,24 @@ main {
 
     #formulaire {
         position: absolute;
-        top: 25%;
+        top: 20%;
         left: 10%;
         width: 80%;
         margin: 0 auto;
         background-color: rgb(254, 254, 254);
-        border: 2px solid #2C2C2C;
         color: #2C2C2C;
         display: flex;
         flex-direction: column;
         border-radius: 5px;
         padding: 50px;
-
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
         .form-item{
             margin-bottom: 2vh;
+            text-align: center;
             label{
                 display: block;
+                text-align: left;
+                margin-left: 8vw;
                 margin-bottom: .5rem;
                 font-size: 2rem;
             }
@@ -66,8 +68,13 @@ main {
             input, textarea{
                 padding: 1rem;
                 margin-bottom: 1rem;
-                width: 100%;
+                width: 80%;
                 
+                &:focus{
+                    border: none;
+                    outline: 3px solid #4AA6DA;
+                    border-radius: 2px;
+                }
                 
             }
             textarea{
@@ -76,7 +83,7 @@ main {
             }
         }
         #btn {
-            background-color: #4AA6DA;
+            background-color: #2C2C2C;
             color: white;
             border: none;
             padding: 1.5rem;
@@ -85,9 +92,18 @@ main {
             font-weight: 900;
             border-radius: 10px;
             margin: 0 auto;
+            &:hover{
+                background-color: #4AA6DA;
+                color: white;
+                animation:jello-horizontal .9s both
+            }
         }
+        
     }
 }
+
+@keyframes jello-horizontal{0%{transform:scale3d(1,1,1)}30%{transform:scale3d(1.25,.75,1)}40%{transform:scale3d(.75,1.25,1)}50%{transform:scale3d(1.15,.85,1)}65%{transform:scale3d(.95,1.05,1)}75%{transform:scale3d(1.05,.95,1)}100%{transform:scale3d(1,1,1)}}
+
 .error{
     margin-top: 5px;
     color: red;

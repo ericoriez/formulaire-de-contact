@@ -1,32 +1,24 @@
 <?php
 
-
 $name = $_POST['nom'];
 $email = $_POST['email'];
 $sujet = $_POST['sujet'];
 $message = $_POST['message'];
+$to = "ericoriez@gmail.com";
+
+$message = wordwrap($message, 70, "\r\n");
 
 
-// $mailheader = "From:".$nom."<".$email.">\r\n";
 
-// $mymail = "ericoriez@live.fr";
-
-// mail($myMail, $sujet, $message, $mailheader)
-// or die("Error");
-
-// echo"message send";
-
-
-// $myarray = &$_POST;
-// $nom=$myarray["nom"];
-// var_dump($nom);
-
-
-// if (isset($_POST[$form])){
-//     $retour = mail("ericoriez@live.fr", "Essai", "Coucou les amis !", "");
-//     if ($retour){
-//         echo "<p> email a bien ete envoyer </p>";
-//     }
-// }
+if (isset($_POST["message"])){
+    $messages = "Ce message vous a été envoyé via la page contact du site contact.fr
+    Nom : ". $name . "
+    Email : " . $email . "
+    Message : " . $message; 
+    $retour = mail($to, $sujet, $messages, "From:ericoriez@gmail.com" . "\r\n" . "Reply-to:" . $email);
+    if ($retour) {
+        echo "Envoyer";
+    }
+}
 
 ?>

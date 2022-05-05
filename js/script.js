@@ -7,32 +7,68 @@ const msgError = document.querySelectorAll('.error');
 const btn = document.getElementById('btn');
 const succes = document.querySelector('.succes')
 
+
+
+
+
+nom.addEventListener('change', function(){
+    console.log("ca change");
+    // validNom(this);
+});
+
+const validNom = function(inputNom) {
+    let nomRegExp = new RegExp()
+}
+
+
+
+
+
+
+
+
+
+
+
+
 form.addEventListener('submit', function(e){
     e.preventDefault();
 
-    let data = "nom="+ nom.value + "&email="+ email.value + "&sujet="+ sujet.value + "&message="+ message.value;
-    console.log(data);
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "./php/contact.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send(data);
-
-    // let value = {nomValue, emailValue, sujetValue, messageValue};
-    // console.log(value);
+    const nomValue = nom.value.trim();
+    // console.log(nomValue);
+    const emailValue = email.value.trim();
+    // console.log(emailValue);
+    const sujetValue = sujet.value.trim();
+    // console.log(sujetValue);
+    const messageValue = message.value.trim();
+    // console.log(messageValue);
     
-    // let formData = new FormData(form);
-    // console.log(formData);
-    //         fetch('php/contact.php', {
-    //             method: "POST",
-    //             body: formData,
+    msgError.forEach(error => {
+        error.classList.add('invisible');
+    })
+    
+    if(nomValue.length < 3 || nomValue.length > 20){
+        // console.log('erreur nom');
+        nom.nextElementSibling.classList.remove('invisible');
+    }else if(sujetValue.length < 3 || sujetValue.length > 50){
+        // console.log('erreur sujet');
+        sujet.nextElementSibling.classList.remove('invisible');
+    }else if(messageValue.length < 10 || messageValue.length > 150){
+        // console.log('erreur message');
+        message.nextElementSibling.classList.remove('invisible');
+    }else {
+        console.log('succes');
+        btn.nextElementSibling.classList.remove('invisible');
 
-    // let xhr = new XMLHttpRequest()
-    // xhr.setRequestHeader('Content-type',"application/x-www-form-urlencoded")
-    // xhr.open("POST","./php/contact.php")
-    // xhr.send("nom=tesmoche")
+        // envoie des donnés du formulaire au php
+        let data = "nom="+ nom.value + "&email="+ email.value + "&sujet="+ sujet.value + "&message="+ message.value;
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "./php/contact.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send(data);
+    }
 })
-// })
-// console.log(btn);
+
 
 // je detecte la validation du formulaire
 // form.addEventListener('submit', function(e){
