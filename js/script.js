@@ -1,164 +1,138 @@
-const form = document.getElementById('formulaire');
-const nom = document.getElementById('nom');
-const email = document.getElementById('email');
-const sujet = document.getElementById('sujet');
-const message = document.getElementById('message');
-const msgError = document.querySelectorAll('.error');
-const btn = document.getElementById('btn');
-const succes = document.querySelector('.succes')
+const form = document.getElementById("formulaire");
+const nom = document.getElementById("nom");
+const email = document.getElementById("email");
+const sujet = document.getElementById("sujet");
+const message = document.getElementById("message");
+const btn = document.getElementById("btn");
+const succes = document.querySelector(".succes");
 
-
-
-
-
-nom.addEventListener('change', function(){
-    console.log("ca change");
-    // validNom(this);
-});
-
-const validNom = function(inputNom) {
-    let nomRegExp = new RegExp()
-}
-
-
-
-
-
-
-
-
-
-
-
-
-form.addEventListener('submit', function(e){
+// récupère les valeurs du formulaire au click du boutton submit
+form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const nomValue = nom.value.trim();
-    // console.log(nomValue);
-    const emailValue = email.value.trim();
-    // console.log(emailValue);
-    const sujetValue = sujet.value.trim();
-    // console.log(sujetValue);
-    const messageValue = message.value.trim();
-    // console.log(messageValue);
-    
-    msgError.forEach(error => {
-        error.classList.add('invisible');
-    })
-    
-    if(nomValue.length < 3 || nomValue.length > 20){
-        // console.log('erreur nom');
-        nom.nextElementSibling.classList.remove('invisible');
-    }else if(sujetValue.length < 3 || sujetValue.length > 50){
-        // console.log('erreur sujet');
-        sujet.nextElementSibling.classList.remove('invisible');
-    }else if(messageValue.length < 10 || messageValue.length > 150){
-        // console.log('erreur message');
-        message.nextElementSibling.classList.remove('invisible');
-    }else {
-        console.log('succes');
-        btn.nextElementSibling.classList.remove('invisible');
+    // vérification de la valeur des inputs et attribution d'une valeur booleen
+    let validName = Error.nom(nom);
+    let validMail = Error.mail(email);
+    let validSujet = Error.sujet(sujet);
+    let validMessage = Error.message(message);
 
+    // vérifie si booleen est true, si true envoie le formulaire
+    if (
+        validName == true &&
+        validMail == true &&
+        validSujet == true &&
+        validMessage == true
+    ) {
+        console.log("succes");
+        btn.nextElementSibling.classList.remove("invisible");
         // envoie des donnés du formulaire au php
-        let data = "nom="+ nom.value + "&email="+ email.value + "&sujet="+ sujet.value + "&message="+ message.value;
+        let data = `nom=${nom.value}&email=${email.value}&sujet=${sujet.value}&message=${message.value}`;
         let xhr = new XMLHttpRequest();
         xhr.open("POST", "./php/contact.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader(
+            "Content-Type",
+            "application/x-www-form-urlencoded"
+        );
         xhr.send(data);
+
+        form.reset();
     }
-})
+});
 
+// creation d'un objet avec differente methode pour attraper les erreurs
+const Error = {
+    /**
+     * @param  { HTMLElement } input_nom
+     */
+    nom(input_nom) {
+        let texteErreur = document.getElementById("pNom");
+        // vérifie que la valeur de l'input match avec une regex
+        let result = input_nom.value.match(/^[a-zA-Z]\s*$/);
+        let valide = false;
 
-// je detecte la validation du formulaire
-// form.addEventListener('submit', function(e){
-//     e.preventDefault();
-    
-//     // je recupere les valeurs de chacun des inputs
-//     const nomValue = nom.value.trim();
-//     console.log(nomValue);
-//     const emailValue = email.value.trim();
-//     console.log(emailValue);
-//     const sujetValue = sujet.value.trim();
-//     console.log(sujetValue);
-//     const messageValue = message.value.trim();
-//     console.log(messageValue);
+        if (result == null) {
+            texteErreur.textContent = "Caractère speciaux interdits";
+            texteErreur.style.color = "red";
+            valide = false;
+        } else if (input_nom.value.length < 3 || input_nom.value.length > 10) {
+            texteErreur.textContent = "Doit contenir entre 3 et 10 caractère";
+            texteErreur.style.color = "red";
+            valide = false;
+        } else {
+            texteErreur.textContent = "";
+            valide = true;
+        }
+        return valide;
+    },
 
-//     msgError.forEach(error => {
-//         error.classList.add('invisible');
-//     })
+    mail(input_mail) {
+        let texteErreur = document.getElementById("pMail");
+        let result = input_mail.value.match(
+            /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i
+        );
+        let valide = false;
 
-//     if(nomValue.length < 3 || nomValue.length > 20){
-//         console.log('erreur');
-//         nom.nextElementSibling.classList.remove('invisible');
-//     }else if(sujetValue.length < 3 || sujetValue.length > 50){
-//         console.log('erreur');
-//         sujet.nextElementSibling.classList.remove('invisible');
-//     }else if(messageValue.length < 10 || messageValue.length > 150){
-//         console.log('erreur');
-//         message.nextElementSibling.classList.remove('invisible');
-//     }else {
-//         console.log('succes');
-//         btn.nextElementSibling.classList.remove('invisible');
+        if (result == null) {
+            texteErreur.textContent = "Caractère speciaux interdits";
+            texteErreur.style.color = "red";
+            valide = false;
+        } else if (
+            input_mail.value.length < 5 ||
+            input_mail.value.length > 50
+        ) {
+            texteErreur.textContent = "Doit contenir entre 5 et 50 caractère";
+            texteErreur.style.color = "red";
+            valide = false;
+        } else {
+            texteErreur.textContent = "";
+            valide = true;
+        }
+        return valide;
+    },
 
-//         let formData = new FormData(form);
-//         fetch('php/contact.php', {
-//             method: "POST",
-//             body: formData,
-//         })
-//         // form.reset();
-        
-        // let data = "nom="+ nom + "&email="+ email + "&sujet="+ sujet;
-        // console.log(data);
-        // let xhr = new XMLHttpRequest();
+    sujet(input_sujet) {
+        let texteErreur = document.getElementById("pSujet");
+        let result = input_sujet.value.match(/^[a-zA-Z0-9]*$/i);
+        let valide = false;
 
-        // xhr.open("POST", "/contact.php", true);
-        // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        // xhr.send(data);
+        if (result == null) {
+            texteErreur.textContent = "Caractère speciaux interdits";
+            texteErreur.style.color = "red";
+            valide = false;
+        } else if (
+            input_sujet.value.length < 5 ||
+            input_sujet.value.length > 50
+        ) {
+            texteErreur.textContent = "Doit contenir entre 5 et 50 caractère";
+            texteErreur.style.color = "red";
+            valide = false;
+        } else {
+            texteErreur.textContent = "";
+            valide = true;
+        }
+        return valide;
+    },
 
-        
+    message(input_message) {
+        let texteErreur = document.getElementById("pMessage");
+        let result = input_message.value.match(/^[a-zA-Z0-9]*$/i);
+        let valide = false;
 
-        // fetch('../php/contact.php', {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/x-www-form-urlencoded",
-        //     },
-        //     body:{
-            
-        //         "nom" : nomValue,
-        //         "email" : emailValue,
-        //         "sujet" : sujetValue,
-        //         "message" : messageValue,
-        //     },
-        // })
-        //     .then((res) => {
-        //         console.log(res);
-        //     })
-
-
-        // let request = new XMLHttpRequest();
-        // request.open("POST", "./php/contact.php");
-        // request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        // request.send(formData);
-
-
-
-        // fetch('./php/contact.php', {
-        //     method: "POST",
-        //     headers: {
-        //         Accept: "application/json",
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         "nom" : nomValue,
-        //         "email" : emailValue,
-        //         "sujet" : sujetValue,
-        //         "message" : messageValue
-        //     }),
-        // })
-        //     .then((res) => {
-        //         console.log(res);
-        //     })
-//     }
-// });
-
+        if (result == null) {
+            texteErreur.textContent = "Caractère speciaux interdits";
+            texteErreur.style.color = "red";
+            valide = false;
+        } else if (
+            input_message.value.length < 5 ||
+            input_message.value.length > 256
+        ) {
+            texteErreur.textContent = "Doit contenir entre 5 et 256 caractère";
+            texteErreur.style.color = "red";
+            valide = false;
+        } else {
+            texteErreur.textContent = "";
+            valide = true;
+        }
+        return valide;
+    },
+};
