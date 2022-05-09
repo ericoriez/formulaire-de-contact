@@ -3,11 +3,15 @@ const nom = document.getElementById("nom");
 const email = document.getElementById("email");
 const sujet = document.getElementById("sujet");
 const message = document.getElementById("message");
-const btn = document.getElementById("btn");
+const btn = document.querySelector(".modal-btn");
 const succes = document.querySelector(".succes");
+const modalContainer = document.querySelector(".modal-container");
+const modalTriggers = document.querySelectorAll(".modal-trigger");
+
 
 // récupère les valeurs du formulaire au click du boutton submit
 form.addEventListener("submit", function (e) {
+
     e.preventDefault();
 
     // vérification de la valeur des inputs et attribution d'une valeur booleen
@@ -24,7 +28,7 @@ form.addEventListener("submit", function (e) {
         validMessage == true
     ) {
         console.log("succes");
-        btn.nextElementSibling.classList.remove("invisible");
+
         // envoie des donnés du formulaire au php
         let data = `nom=${nom.value}&email=${email.value}&sujet=${sujet.value}&message=${message.value}`;
         let xhr = new XMLHttpRequest();
@@ -32,14 +36,22 @@ form.addEventListener("submit", function (e) {
         xhr.setRequestHeader(
             "Content-Type",
             "application/x-www-form-urlencoded"
-        );
-        xhr.send(data);
+            );
+            xhr.send(data);
 
-        form.reset();
-    }
-});
+            // apparition de la fenêtre modal
+            modalContainer.classList.toggle("active");
+            modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
 
-// creation d'un objet avec differente methode pour attraper les erreurs
+            function toggleModal(e){
+                e.preventDefault()
+                modalContainer.classList.toggle("active");
+                form.reset();
+            }
+        }
+    });
+    
+    // creation d'un objet avec differente methode pour attraper les erreurs
 const Error = {
     /**
      * @param  { HTMLElement } input_nom
@@ -47,9 +59,9 @@ const Error = {
     nom(input_nom) {
         let texteErreur = document.getElementById("pNom");
         // vérifie que la valeur de l'input match avec une regex
-        let result = input_nom.value.match(/^[a-zA-Z]\s*$/);
+        let result = input_nom.value.match(/^[a-zA-Z]*(\s)?[a-zA-Z]*$/);
         let valide = false;
-
+        console.log(result);
         if (result == null) {
             texteErreur.textContent = "Caractère speciaux interdits";
             texteErreur.style.color = "red";
