@@ -45,7 +45,7 @@ main #formulaire {
   top: 20%;
   left: 10%;
   width: 80%;
-  margin: 0 auto;
+  margin: 10px auto;
   background-color: #fefefe;
   color: #2C2C2C;
   display: -webkit-box;
@@ -78,6 +78,7 @@ main #formulaire .form-item input, main #formulaire .form-item textarea {
   padding: 1rem;
   margin-bottom: 1rem;
   width: 80%;
+  height: 60%;
 }
 
 main #formulaire .form-item input:focus, main #formulaire .form-item textarea:focus {
@@ -87,6 +88,7 @@ main #formulaire .form-item input:focus, main #formulaire .form-item textarea:fo
 }
 
 main #formulaire .form-item textarea {
+  height: 80%;
   resize: none;
   font-family: inherit;
 }

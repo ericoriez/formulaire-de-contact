@@ -46,7 +46,8 @@ main {
         top: 20%;
         left: 10%;
         width: 80%;
-        margin: 0 auto;
+        margin: 10px auto;
+        
         background-color: rgb(254, 254, 254);
         color: #2C2C2C;
         display: flex;
@@ -57,6 +58,7 @@ main {
         .form-item{
             margin-bottom: 2vh;
             text-align: center;
+            
             label{
                 display: block;
                 text-align: left;
@@ -69,6 +71,7 @@ main {
                 padding: 1rem;
                 margin-bottom: 1rem;
                 width: 80%;
+                height: 60%;
                 &:focus{
                     border: none;
                     outline: 3px solid #4AA6DA;
@@ -77,6 +80,7 @@ main {
                 
             }
             textarea{
+                height: 80%;
                 resize: none;
                 font-family: inherit;
             }
@@ -117,6 +121,8 @@ main {
 }
 
 
+
+// MODAL validation du formulaire
 .modal-container {
     // display: none;
     visibility: hidden;
